@@ -111,9 +111,11 @@ public class GestionarComicBean implements IGestionarComicLocal {
 			     int compararTamanios = Short.compare((short)LengthNombreComic, LengthComic);
 			     if(compararTamanios<0 ) {
 			    	 ComicsNoSuperanTamanio.add(Nombre);
+			    	 return  ComicsNoSuperanTamanio;
 			     }
 			     else {
 			    	 ComicsSuperanTamanio.add(Nombre);
+			    	 return  ComicsSuperanTamanio;
 			     }
 			    }
 				
