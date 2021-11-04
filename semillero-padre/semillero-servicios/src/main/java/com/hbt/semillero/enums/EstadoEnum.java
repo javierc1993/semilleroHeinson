@@ -8,7 +8,9 @@ package com.hbt.semillero.enums;
  */
 public enum EstadoEnum {
 	ENABLED("enum.estado.stock"), 
-	UNABLED("enum.estafo.notstock"),
+	UNABLED("enum.estado.notstock"),
+	ACTIVO("enum.estado.activo"),
+	INACTIVO("enum.estado.inactivo"),
 	;
 	/**
 	 * Atributo que contiene la clave del mensaje.
