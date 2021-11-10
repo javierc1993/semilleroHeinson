@@ -33,7 +33,7 @@ export class MenuComponent implements OnInit {
    * @author Diego Fernando Alvarez Silva <dalvarez@heinsohn.com.co>
    */
   public navegarGestionarComic(): void {
-    this.router.navigate(['gestionar-comic']);
+    this.router.navigate(['gestionarComic']);
   }
 
   /**

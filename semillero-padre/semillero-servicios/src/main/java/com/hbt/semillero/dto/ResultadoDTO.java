@@ -44,7 +44,7 @@ public class ResultadoDTO implements Serializable {
 	 * 
 	 * @return the exitoso
 	 */
-	public boolean isExitoso() {
+	public boolean getExitoso() {
 		return exitoso;
 	}
 

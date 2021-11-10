@@ -15,12 +15,12 @@
 	<name>Semillero HBT [EAR]</name>
 
 	<dependencies>
-		<dependency>
+	<dependency>
 			<groupId>com.hbt.semillero.web</groupId>
 			<artifactId>semillero-web</artifactId>
 			<type>war</type>
 		</dependency>
-		<dependency>
+	<dependency>
 			<groupId>com.hbt.semillero.servicios</groupId>
 			<artifactId>semillero-servicios</artifactId>
 			<type>war</type>
@@ -36,11 +36,12 @@
 				<configuration>
 					<modules>
 						<!-- Semillero -->
-						<webModule>
+					   <webModule>
 							<groupId>com.hbt.semillero.servicios</groupId>
 							<artifactId>semillero-servicios</artifactId>
 							<contextRoot>/semillero-servicios</contextRoot>
 						</webModule>
+ 					
 						<webModule>
 							<groupId>com.hbt.semillero.web</groupId>
 							<artifactId>semillero-web</artifactId>

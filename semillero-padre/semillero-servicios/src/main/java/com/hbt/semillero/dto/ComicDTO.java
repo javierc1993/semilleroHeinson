@@ -32,8 +32,6 @@ public class ComicDTO extends ResultadoDTO implements Serializable  {
 	private LocalDate fechaVenta;
 	private EstadoEnum estadoEnum;
 	private Long cantidad;
-	private String MensajeEjecucion;
-	private Boolean Exitoso;
 
 	/**
 	 * Metodo encargado de retornar el valor del atributo id
@@ -312,22 +310,6 @@ public class ComicDTO extends ResultadoDTO implements Serializable  {
 		return true;
 	}
 
-	public String getMensajeEjecucion() {
-		return MensajeEjecucion;
-	}
-	
-	public Boolean getExitoso (){
-		return Exitoso;
-	}
 	
 	
-	public void setMensajeEjecucion(String MensajeEjecucion) {
-		this.MensajeEjecucion = MensajeEjecucion;
-		
-	}
-
-	public void setExitoso(Boolean Exitoso) {
-		this.Exitoso = Exitoso;
-		
-	}
 }

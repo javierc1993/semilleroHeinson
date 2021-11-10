@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { ComicDTO } from '../../dto/comic-dto';
 /**
  * @description Componente bienvenida, el cual contiene la imagen de bienvenida al semillero
  * 
@@ -13,6 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class BienvenidaComponent implements OnInit {
   
   public urlImagen : string;
+  public comicDTO: ComicDTO;
   
   constructor(private router : Router, private activatedRoute: ActivatedRoute) {
     console.log("entro al constructor del componente bienvenida");
@@ -20,9 +21,9 @@ export class BienvenidaComponent implements OnInit {
 
   ngOnInit(): void {
     this.urlImagen = "https://www.elempleo.com/sitios-empresariales/colombia/heinsohn-business-technology/img/elempleo-02.jpg";
-    let data = this.activatedRoute.snapshot.params;
-    
-    console.log("Parametros recibidos " + data);
+    let comic: any  = this.activatedRoute.snapshot.params;
+    this.comicDTO = comic;
+    console.log("Parametros recibidos " + this.comicDTO);
     
   }
 
