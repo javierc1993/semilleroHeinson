@@ -11,26 +11,64 @@ import com.hbt.semillero.enums.TematicaEnum;
  * <b>Descripción:<b> Clase que determina el dto a usar para modificar,
  * consultar y posteriormente eliminar un comic
  * 
- * @author ccastano
+ * @author javier cuchumbe
+ * @version 1.0
  */
 public class ComicDTO extends ResultadoDTO implements Serializable  {
 
 	/**
-	 * Atributo que determina
+	 * Atributo que determina id único que identifica una clase cuando lo
+	 * serializamos
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Atributo de tipo Long que determina id del comic
+	 */
 	private Long id;
+	/**
+	 * Atributo de tipo String que determina el nombre del comic
+	 */
 	private String nombre;
+	/**
+	 * Atributo de tipo String que determina la editorial
+	 */
 	private String editorial;
+	/**
+	 * Atributo de tipo TematicaEnum que determina la tematica de un comic
+	 */
 	private TematicaEnum tematicaEnum;
+	/**
+	 * Atributo de tipo String que determina la colección del comic
+	 */
 	private String coleccion;
+	/**
+	 * Atributo de tipo Integer que determina el número de páginas del comic
+	 */
 	private Integer numeroPaginas;
+	/**
+	 * Atributo de tipo BigDecimal que determina el precio del comic
+	 */
 	private BigDecimal precio;
+	/**
+	 * Atributo de tipo String que determina el autor(es) del comic
+	 */
 	private String autores;
+	/**
+	 * Atributo de tipo Boolean que determina si tiene color (1) o no (0) un comic
+	 */
 	private Boolean color;
+	/**
+	 * Atributo de tipo LocalDate que determina la fecha de venta de un comic
+	 */
 	private LocalDate fechaVenta;
+	/**
+	 * Atributo de tipo EstadoEnum que determina el estado (ACTIVO) (INACTIVO) del comic
+	 */
 	private EstadoEnum estadoEnum;
+	/**
+	 * Atributo de tipo Long que determina la cantidad existente de comics
+	 */
 	private Long cantidad;
 
 	/**

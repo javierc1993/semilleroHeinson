@@ -24,8 +24,8 @@ import javax.persistence.Table;
  * <b>Descripción:<b> Clase que determina la entidad que permite representar la
  * tabla "DB_SEMILLERO"."COMIC"
  * 
- * @author ccastano
- * @version
+ * @author JAVIER CUCHUMBE
+ * @version 1.0
  */
 @Entity
 @Table(name = "COMIC")

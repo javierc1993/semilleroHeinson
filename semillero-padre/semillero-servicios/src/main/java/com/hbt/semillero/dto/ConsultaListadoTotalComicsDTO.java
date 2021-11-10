@@ -3,12 +3,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hbt.semillero.entidad.Comic;
-
+/**
+ *<b>Descripcion:<b> DTO usado para obtner 
+ *el listado total de los comics
+ *@see SEMILLERO HEINSONH
+ *@author JAVIER CUCHUMBE. 
+ */
 public class ConsultaListadoTotalComicsDTO extends ResultadoDTO {
-	
+	/**
+	 * id único que identifica una clase cuando lo
+	 * serializamos
+	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * atributo lista
+	 * que contiene objetos de tipo comic
+	 * 
+	 */
 	private List<Comic> listadoComics;
 	
+	/**
+	 * 
+	 * Constructor de la clase.
+	 */
 	public ConsultaListadoTotalComicsDTO() {
 		this.listadoComics=new ArrayList<>();
 	}

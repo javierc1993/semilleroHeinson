@@ -3,7 +3,7 @@ package com.hbt.semillero.ejb;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -13,27 +13,32 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import org.hibernate.result.NoMoreReturnsException;
-
 import com.hbt.semillero.dto.ComicDTO;
 import com.hbt.semillero.dto.ConsultaNombrePrecioComicDTO;
 import com.hbt.semillero.dto.ConsultaComicTamanioNombreDTO;
-import com.hbt.semillero.dto.ConsultaListadoTotalComicsDTO;
 import com.hbt.semillero.dto.ResultadoDTO;
 import com.hbt.semillero.entidad.Comic;
 
 /**
  *<b>Descripcion:<b> Clase Bean donde se determina la lógica 
  *de negocio. 
+ *@author JAVIER CUCHUMBE
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class GestionarComicBean implements IGestionarComicLocal {
-
+	
+	
 	@PersistenceContext
 	public EntityManager em;
 	
+	    /**
+	   * Método encargado de crear un comic
+	   * basado en un objeto DTO, en este caso comicDTO
+	   * @return objeto de tipo comicDTO 
+	   * @param comicDTO
+	   * @author SEMILLERO HEINSONH
+	   */
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public ComicDTO crearComic(ComicDTO comicDTO) throws Exception {
@@ -49,12 +54,16 @@ public class GestionarComicBean implements IGestionarComicLocal {
 		comicDTOResult.setExitoso(true);
 		comicDTOResult.setMensajeEjecucion("El comic ha sido creado exitosamente");
 		return comicDTOResult;
-	}
+	} 
+	
 	
 	   /**
 	   * Método encargado de buscar comic
 	   * basado en un parametro, en este caso el id del comic
+	   * y devolver un objeto consultaNombrePrecioDTO
+	   * de tipo ConsultaNombrePrecioComicDTO
 	   * @return objeto de tipo consultaNombrePrecioDTO 
+	   * @author SEMILLERO HEINSONH
 	   */
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	@Override
@@ -75,7 +84,13 @@ public class GestionarComicBean implements IGestionarComicLocal {
 
 		return consultaNombrePrecioDTO;
 	}
-
+	
+	   /**
+	   * Método encargado de consultar el listado
+	   * total de comics en BD.
+	   * @return lista de objetos de tipo ComicDTO 
+	   * @author JAVIER CUCHUMBE
+	   */
 	
 	@Override
 	public List<ComicDTO> consultarComics() {
@@ -86,6 +101,7 @@ public class GestionarComicBean implements IGestionarComicLocal {
 		List<ComicDTO> listadoComics= new ArrayList<ComicDTO>();
 		try {
 			Query consultaNativa = em.createQuery(consulta);
+			@SuppressWarnings("unchecked")
 			List<Comic> listaComics = consultaNativa.getResultList();
 			for(int i =0; i<listaComics.size(); i++)
 			{ 
@@ -101,6 +117,14 @@ public class GestionarComicBean implements IGestionarComicLocal {
 			}
 		return  listadoComics;
 	}
+	
+	   /**
+	   * Método encargado de actualizar un  comic
+	   * basado en un objeto, en este caso comicDTO
+	   * @return objeto de tipo ComicDTO
+	   * @param objeto de tipo ComicDTO
+	   * @author javier cuchumbe
+	   */
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -115,12 +139,19 @@ public class GestionarComicBean implements IGestionarComicLocal {
 		em.merge(comic);
 		comicDTOResult = this.convertirComicToComicDTO(comic);
 		comicDTOResult.setExitoso(true);
-		comicDTOResult.setMensajeEjecucion("El comic : "+ nombreComic + "ha sido actualizado exitosamente");
+		comicDTOResult.setMensajeEjecucion("El comic : "+ nombreComic + " ha sido actualizado exitosamente");
 		return comicDTOResult;
 		
 	}
 
-	
+	 
+	    /**
+	   * Método encargado de eliminar un  comic
+	   * basado en un parametro, en este caso idComic
+	   * @return objeto de tipo ResultadoDTO
+	   * @param primitivo de tipo Long idCcmic
+	   * @author javier cuchumbe
+	   */
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public ResultadoDTO eliminarComic(Long idComic) {
@@ -142,7 +173,17 @@ public class GestionarComicBean implements IGestionarComicLocal {
 	}
 
 
-	
+	/**
+	   * Método encargado de consultar 
+	   * y clasificar los nombres de los comics 
+	   * en listas basado en un parametro
+	   * de tipo primitivo Short lengthComic
+	   * retornando un objeto de tipo ConsultaComicTamanioNombreDTO
+	   * basado en un objeto, en este caso comicDTO
+	   * @return objeto de tipo ConsultaComicTamanioNombreDTO
+	   * @param primitivo de tipo Short lengthComic
+	   * @author javier CUCHUMBE
+	   */
 	@SuppressWarnings("unchecked")
 	@Override
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -177,6 +218,7 @@ public class GestionarComicBean implements IGestionarComicLocal {
 			}
 		return  tamanioNombreDTO;
 	}
+	
 	/**
 	 * 
 	 * Metodo encargado de transformar un comic a un comicDTO

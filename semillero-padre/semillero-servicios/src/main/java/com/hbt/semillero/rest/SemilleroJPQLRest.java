@@ -2,7 +2,12 @@
  * GestionarComicRest.java
  */
 package com.hbt.semillero.rest;
-
+/**
+ *<b>Descripcion:<b> Clase ejemplo semillero heinsonh 
+ *donde se puede ver algunos ejemplos
+ *dl uso de JPQL
+ *@author JAVIER CUCHUMBE. 
+ */
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
