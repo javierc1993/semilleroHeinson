@@ -44,7 +44,11 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['bienvenida']);
   }
 
+  /**
+   * @description Metodo encargado de direccionar al componente de comprar comic
+   * @author Yehison Javier Cuchumbe Pencua <javierc@unicauca.edu.co>
+   */
   public navegarGestionarCompra(): void {
-    //WIP
+    this.router.navigate(['comprarComic']);
   }
 }

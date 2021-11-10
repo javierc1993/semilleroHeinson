@@ -87,7 +87,6 @@ export class EditarComicComponent implements OnInit {
     this.comicDTO = new ComicDTO();*/
     //this.limpiarDatosComic(this.comicDTO);
     console.log(this.comicDTO);
-    debugger;
     this.comicDTOActualizar = new ComicDTO();
     this.comicDTOActualizar.id = this.comicDTO.id;
     this.comicDTOActualizar.nombre= this.gestionarComicForm.controls.nombre.value;

@@ -1,6 +1,8 @@
 package com.hbt.semillero.ejb;
 
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,8 @@ import com.hbt.semillero.dto.ConsultaNombrePrecioComicDTO;
 import com.hbt.semillero.dto.ConsultaComicTamanioNombreDTO;
 import com.hbt.semillero.dto.ResultadoDTO;
 import com.hbt.semillero.entidad.Comic;
+import com.hbt.semillero.enums.EstadoEnum;
+import com.hbt.semillero.enums.TematicaEnum;
 
 /**
  *<b>Descripcion:<b> Clase Bean donde se determina la lógica 
@@ -136,6 +140,7 @@ public class GestionarComicBean implements IGestionarComicLocal {
 		String nombreComic = comicDTO.getNombre();
 		ComicDTO comicDTOResult = null;
 		Comic comic = this.convertirComicDTOToComic(comicDTO);
+		
 		em.merge(comic);
 		comicDTOResult = this.convertirComicToComicDTO(comic);
 		comicDTOResult.setExitoso(true);
@@ -144,6 +149,25 @@ public class GestionarComicBean implements IGestionarComicLocal {
 		
 	}
 
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public ComicDTO venderComic(ComicDTO comicDTO) throws Exception  {
+		
+		if(comicDTO.getNombre() == null) {
+			throw new Exception("El campo nombre es requerido");
+		}
+		LocalDate ahora = LocalDate.now();
+		String nombreComic = comicDTO.getNombre();
+		ComicDTO comicDTOResult = null;
+		Comic comic = this.convertirComicDTOToComic(comicDTO);
+		comic.setFechaVenta(ahora);
+		em.merge(comic);
+		comicDTOResult = this.convertirComicToComicDTO(comic);
+		comicDTOResult.setExitoso(true);
+		comicDTOResult.setMensajeEjecucion("El comic : "+ nombreComic + " ha sido actualizado exitosamente");
+		return comicDTOResult;
+		
+	}
 	 
 	    /**
 	   * Método encargado de eliminar un  comic
@@ -218,6 +242,44 @@ public class GestionarComicBean implements IGestionarComicLocal {
 			}
 		return  tamanioNombreDTO;
 	}
+	
+	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public List<ComicDTO> consultarParametroComic(String parametro) {
+		String consulta = "SELECT c  "
+				+ " FROM Comic c WHERE  c.nombre = :parametro OR c.editorial = :parametro" ;
+			
+		ComicDTO  comicDTO= new ComicDTO();
+		List<ComicDTO> listadoComics= new ArrayList<ComicDTO>();
+		try {
+			Query consultaNativa = em.createQuery(consulta);
+			consultaNativa.setParameter("parametro", parametro);
+			@SuppressWarnings("unchecked")
+			List<Comic> listaComics = consultaNativa.getResultList();
+			if(listaComics == null || listaComics.size() == 0)
+			{
+				comicDTO.setExitoso(false);
+		     	comicDTO.setMensajeEjecucion("No hay resultados a su busqueda");
+		     	listadoComics.add(comicDTO);
+			}
+			else {
+			for(int i =0; i<listaComics.size(); i++)
+			{ 
+				comicDTO = this.convertirComicToComicDTO(listaComics.get(i));
+				comicDTO.setExitoso(true);
+		     	comicDTO.setMensajeEjecucion("Se ejecuto exitosamente la consulta");
+		     	listadoComics.add(comicDTO);
+			}
+			}
+			
+			} catch (Exception e) {
+					comicDTO.setExitoso(false);
+					comicDTO.setMensajeEjecucion("Se ha presentado un error tecnico al consultar el listado de comics: " + e);
+			}
+		return  listadoComics;
+	}
+	
 	
 	/**
 	 * 

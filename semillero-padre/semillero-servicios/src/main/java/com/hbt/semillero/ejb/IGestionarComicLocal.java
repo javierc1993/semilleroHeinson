@@ -68,4 +68,16 @@ public interface IGestionarComicLocal {
 	   */
 
 	public ComicDTO actualizarComic(ComicDTO comicDTO) throws Exception;
+
+
+	public List<ComicDTO> consultarParametroComic(String parametro);
+	
+	   /**
+	   * Método abstracto encargado de actualizar un comic
+	   * basado en un objeto DTO, en este caso comicDTO
+	   * @return objeto de tipo comicDTO 
+	   * @param comicDTO
+	   */
+
+	public ComicDTO venderComic(ComicDTO comicDTO) throws Exception;
 }

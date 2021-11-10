@@ -14,6 +14,7 @@ import { NgbModal, NgbModalConfig, NgbModule, ModalDismissReasons} from '@ng-boo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditarComicComponent } from './semillero/componentes/editar-comic/editar-comic.component';
 import { CrearComicComponent } from './semillero/componentes/crear-comic/crear-comic.component';
+import { ComprarComicComponent } from './semillero/componentes/comprar-comic/comprar-comic.component';
 //import { GestionarComicComponent } from './semillero/componentes/gestionarComic/gestionar-comic';
 
 // DTOs
@@ -27,7 +28,8 @@ import { CrearComicComponent } from './semillero/componentes/crear-comic/crear-c
     BienvenidaComponent,
     GestionarComicComponent,
     EditarComicComponent,
-    CrearComicComponent
+    CrearComicComponent,
+    ComprarComicComponent
   ],
   imports: [
     BrowserModule,

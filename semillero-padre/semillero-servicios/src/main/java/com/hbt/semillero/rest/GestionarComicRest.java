@@ -103,7 +103,13 @@ public class GestionarComicRest {
 		return comicDTOResult;
 	} 
 	
-	 
+	@GET
+	@Path("/consultarParametroComic")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ComicDTO> consultarParametroComic( @QueryParam("paramBusqueda") String paramBusqueda ) throws Exception {
+		return this.gestionarComicLocal.consultarParametroComic(paramBusqueda);
+	}
+	
 	   /**
 	   * ruta:  /crearComic
 	   * tipo: POST
@@ -152,6 +158,29 @@ public class GestionarComicRest {
 		return comicDTOResult;
 	} 
 	
+	/**
+	   * ruta:  /actualizarComic
+	   * tipo: POST
+	   * Método encargado de recibir un DTO de tipo
+	   * ComiCDTO y retorna un DTO de tipo ComicDTO
+	   * @return objeto de tipo ComicDTO
+	   * @param DTO de tipo ComicDTO
+	   * @author javier cuchumbe
+	   */
+	@POST
+	@Path("/venderComic")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ComicDTO venderComic(ComicDTO comicDTO) throws Exception {
+		ComicDTO comicDTOResult = new ComicDTO();
+		try {
+			comicDTOResult = this.gestionarComicLocal.actualizarComic(comicDTO);
+		}  catch (Exception e) {
+			comicDTOResult.setExitoso(false);
+			comicDTOResult.setMensajeEjecucion("Se ha presentado un error tecnico, causa: " + e.getMessage());
+		}
+		return comicDTOResult;
+	} 
 
 	
 }

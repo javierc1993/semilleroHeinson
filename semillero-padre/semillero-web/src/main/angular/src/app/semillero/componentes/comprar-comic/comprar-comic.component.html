@@ -1,0 +1,68 @@
+<div class="container">
+<h1>Comprar COMICS</h1>
+<div class="form-group">
+    <input type="text"  class="forms-control" placeholder="Buscar comic..." (blur)="onBlurEvent($event)">
+</div>
+</div>
+<div *ngIf="mostrarTabla"  class="container">
+<h1>RESULTADOS DE LA BUSQUEDA</h1>
+
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Tematica</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">A color</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--date:"MM/dd/yy"
+                    | uppercase-->
+                    <tr *ngFor="let comic of listaComics; let i=index;">
+                        <th scope="row">{{comic.id}}</th>
+                        <td>{{comic.nombre | uppercase }}</td>
+                        <td>{{comic.tematicaEnum | lowercase }}</td>
+                        <td>{{comic.precio | number: '.2'}}</td>
+                        <td>{{comic.color ? 'Si' : 'No' }}</td>
+                        <td>{{comic.cantidad }}</td>
+                        <td>
+                            <i class="far fa-money-bill-alt" (click)="confirmarCompraComic(comic)" title="Comprar"></i>
+                            <!--<i class="fas fa-pencil-alt 2x ml-1"  [routerLink]="['/bienvenida', comic]" title="Editar"></i>-->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    
+
+
+</div>
+
+<div class="container">
+    <div *ngIf="mostrarAlert" class="alert alert-danger" id="compraComic" role="alert">
+     <h1>  {{ listaComics[0].mensajeEjecucion}} </h1>         
+    </div>
+    <div *ngIf="mostrarDialogCompra" class="alert alert-warning" id="compraComic" role="alert" text-align ="center">
+       <p>Hay {{ventaComic.cantidad}}  comics Disponibles</p>
+           <p> Cuantos comics desea comprar?</p>   
+           <input type="number" name="" minlength="1" id="" [(ngModel)]="cantidad">     
+        <div>
+            <button  class="btn btn-success" (click)="generarCompraComic(ventaComic)">Aceptar</button>
+        
+            <button  class="btn btn-danger" (click)="cancelarAction()">Cancelar</button>
+        </div>
+           
+       </div>
+
+    <div class="alert alert-success" *ngIf="compraRealizada">
+        {{mensaje | uppercase}}
+    </div>
+</div>
