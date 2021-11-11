@@ -4,7 +4,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { compileFactoryFunction } from '@angular/compiler/src/render3/r3_factory';
 import { ThrowStmt } from '@angular/compiler';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GestionarComicService } from '../../servicios/gestionar-comic.service';
 import { allowedNodeEnvironmentFlags } from 'process';
 
@@ -47,10 +47,12 @@ export class GestionarComicComponent implements OnInit {
   public submitted : boolean;
 
   public mensajeEjecucion : string;
+
+  public mensaje: string;
   
 
 
-  constructor(private fb: FormBuilder, private router : Router, private gestionComicsService : GestionarComicService) { 
+  constructor(private fb: FormBuilder, private router : Router, private gestionComicsService : GestionarComicService,private activatedRoute: ActivatedRoute) { 
     this.gestionarComicForm = this.fb.group({
     nombre : [null, Validators.required],
     editorial : [null, Validators.required],
@@ -69,9 +71,11 @@ export class GestionarComicComponent implements OnInit {
 
   ngOnInit() {
     this.submitted= false;
+    let mensajeExitoso: any  = this.activatedRoute.snapshot.params;
+    this.mensaje= mensajeExitoso;
     this.mostrarItem = false;
     this.mostrarAlert = false;
-    this.mostrarToast = false;
+    this.mostrarToast = true;
     this.comicDTO = new ComicDTO();
     this.listaComics = new Array<ComicDTO>();
     this.consultarComics();
@@ -149,6 +153,17 @@ export class GestionarComicComponent implements OnInit {
     });
 
   }
+
+/*******
+ * TALLER
+ * 
+ */
+ public irAComprarComic(comic : ComicDTO) : void {
+  this.cerrar();
+  this.router.navigate(['comprarComic', comic]);
+}
+ 
+
 
   private limpiarDatosComic( ) : void {
     this.submitted= false;

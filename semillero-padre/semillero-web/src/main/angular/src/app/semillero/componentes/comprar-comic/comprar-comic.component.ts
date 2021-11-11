@@ -1,7 +1,10 @@
+import { compileComponentFromRender2 } from '@angular/compiler/src/render3/view/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { isEmpty } from 'rxjs-compat/operator/isEmpty';
 import { ComicDTO } from '../../dto/comic-dto';
+import { ActivatedRoute } from '@angular/router';
 import { GestionarComicService } from '../../servicios/gestionar-comic.service';
 
 @Component({
@@ -10,6 +13,7 @@ import { GestionarComicService } from '../../servicios/gestionar-comic.service';
   styleUrls: ['./comprar-comic.component.css']
 })
 export class ComprarComicComponent implements OnInit {
+  public gestionarComicForm: FormGroup;
   public cantidad : number;
   public comicDTO : ComicDTO;
   public listaComics : Array<ComicDTO>;
@@ -19,19 +23,37 @@ export class ComprarComicComponent implements OnInit {
   public ventaComic : ComicDTO;
   public compraRealizada : Boolean;
   public mensaje : string;
+  public submitted : boolean;
 
 
-  constructor(private router: Router, private gestionComicsService : GestionarComicService) { }
+  constructor(private fb: FormBuilder, private router: Router, private gestionComicsService : GestionarComicService, private activatedRoute: ActivatedRoute) {
+    this.gestionarComicForm = this.fb.group({
+     cantidad: [null, Validators.required],
+     nombre:[null]
+      });
+
+   }
 
   ngOnInit() {
-    this.comicDTO = new ComicDTO();
+    this.submitted= false;
+    let comic: any  = this.activatedRoute.snapshot.params;
+    this.comicDTO = comic;
     this.ventaComic = new ComicDTO();
     this.listaComics = new Array<ComicDTO>();
-    //this.consultarComics();
+    this.mostrarComic(comic);
     this.mostrarTabla = false;
     this.mostrarAlert= false;
-    this.mostrarDialogCompra = false;
+    this.mostrarDialogCompra = true;
     this.compraRealizada=false;
+  }
+
+  get f() {
+    return this.gestionarComicForm.controls;
+}
+
+  public mostrarComic(comicDTO: ComicDTO) : void{
+    let comic = this.comicDTO;
+    this.gestionarComicForm.setValue({nombre:comic.nombre,cantidad:1});
   }
 
   public onBlurEvent(event : any): void{
@@ -58,20 +80,21 @@ export class ComprarComicComponent implements OnInit {
   }
 
   public cancelarAction(): void{
-    this.mostrarDialogCompra=false;
+    this.router.navigate(['gestionarComic']);
   }
 
-  public generarCompraComic(ventaComic : ComicDTO): void{
-    let cantidadActual = ventaComic.cantidad;
-    this.ventaComic.cantidad = cantidadActual - this.cantidad;
-    console.log( Date.now());
-    console.log(cantidadActual-this.cantidad);
-    this.gestionComicsService.venderComic(ventaComic).subscribe(data=>{
+  public generarCompraComic(): void{
+    let ventaComic= this.comicDTO;
+    let cantidadActual: number  = +ventaComic.cantidad;
+    let cantidadComprar: number = this.gestionarComicForm.controls.cantidad.value;
+    ventaComic.cantidad = cantidadActual - cantidadComprar;
+    this.gestionComicsService.venderTallerComic(ventaComic).subscribe(data=>{
       console.log(data);
      if(data.exitoso){
        this.mostrarDialogCompra=false;
        this.compraRealizada=true;
        this.mensaje= "compra realizada con exito"
+       this.router.navigate(['gestionarComic',this.mensaje])
      }
      else{
       this.compraRealizada=true;
@@ -80,21 +103,7 @@ export class ComprarComicComponent implements OnInit {
 
     });
   }
-  public consultarComics(){
-    
-    this.gestionComicsService.consultarComics().subscribe(data=>{
-      
-      if(data[0].exitoso){
-        this.listaComics = data;
-      
-      }
-      else{
-        console.log(data[0].mensajeEjecucion);
-      }  
-    }, error =>{
-      console.log(error);
-    });
-  }
+
 
 
 

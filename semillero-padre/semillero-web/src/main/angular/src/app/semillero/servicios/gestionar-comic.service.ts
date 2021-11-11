@@ -29,6 +29,10 @@ export class GestionarComicService extends AbstractService {
     return this.httpClient.post('http://localhost:8085/semillero-servicios/rest/gestionarComic/venderComic',comicDTO);
   }
 
+  public venderTallerComic(comicDTO : ComicDTO): Observable<any> {
+    return this.httpClient.post('http://localhost:8085/semillero-servicios/rest/gestionarCompraComic/venderComic',comicDTO);
+  }
+
   public eliminarComic(idComic : number): Observable<any> {
     let params = new HttpParams().set('idComic', idComic.toString());
     return this.httpClient.get('http://localhost:8085/semillero-servicios/rest/gestionarComic/eliminarComic', {params:params});

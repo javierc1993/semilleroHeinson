@@ -51,7 +51,8 @@
      <h1>  {{ listaComics[0].mensajeEjecucion}} </h1>         
     </div>
     <div *ngIf="mostrarDialogCompra" class="alert alert-warning" id="compraComic" role="alert" text-align ="center">
-       <p>Hay {{ventaComic.cantidad}}  comics Disponibles</p>
+       <p> Nombre del comic seleccionado: {{comicDTO.nombre}}</p>
+        <p>Hay {{comicDTO.cantidad}}  comics Disponibles</p>
            <p> Cuantos comics desea comprar?</p>   
            <input type="number" name="" minlength="1" id="" [(ngModel)]="cantidad">     
         <div>
@@ -65,4 +66,49 @@
     <div class="alert alert-success" *ngIf="compraRealizada">
         {{mensaje | uppercase}}
     </div>
+</div>
+
+<div class="container">
+    <form [formGroup]="gestionarComicForm">
+        <h1>Gestionar Comic</h1>
+        <hr>        
+        
+        <div class="row">
+            <div class="col-6">
+                <label for="nombreComic">Nombre:</label>
+                <input type="text" class="form-control" id="nombreComic" maxlength="50" formControlName="nombre"
+                    [ngClass]="{ 'is-invalid' :  submitted && f.nombre.errors }">
+                <div *ngIf="submitted && f.nombre.errors">
+                    <span class="text-danger" *ngIf="f.nombre.errors.required">Campo requerido.</span>
+                 
+                </div>
+            </div>
+
+            <div class="col-6">
+                <label for="precio">Cantidad:</label>
+                <input type="number" class="form-control" id="cantidad" step=".01"  minlength="1" formControlName="cantidad"
+                     [ngClass]="{ 'is-invalid' :  submitted && f.cantidad.errors}">
+                <div *ngIf="submitted && f.cantidad.errors">
+                    <span class="text-danger" *ngIf="f.cantidad.errors.required">Campo requerido.</span>
+                   
+                </div>
+            </div>
+        </div>
+    
+       
+       
+        <div>
+            <button  class="btn btn-success" (click)="generarCompraComic(ventaComic)">Aceptar</button>
+        
+            <button  class="btn btn-danger" (click)="cancelarAction()">Cancelar</button>
+        </div>
+       
+    
+        
+       
+    
+    
+    
+    </form>
+
 </div>
